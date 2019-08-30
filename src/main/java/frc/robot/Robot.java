@@ -26,25 +26,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Robot extends TimedRobot {
 
-  private WPI_TalonSRX[] leftDrive = new WPI_TalonSRX[2];
-  private WPI_TalonSRX[] rightDrive = new WPI_TalonSRX[2];
-  private SpeedControllerGroup left = new SpeedControllerGroup(leftDrive[0], leftDrive[1]);
-  private SpeedControllerGroup right = new SpeedControllerGroup(rightDrive[0], rightDrive[1]);
-  private SteeringWheel steeringWheel = new SteeringWheel(0);
-  private Joystick joystick = new Joystick(1);
-  private DoubleSolenoid gearShift = new DoubleSolenoid(0, 1);
   /**
    * This function is run when the robot is first started up and should be
    * used for any initialization code.
    */
   @Override
   public void robotInit() {
-    leftDrive[0] = new WPI_TalonSRX(20);
-    leftDrive[1] = new WPI_TalonSRX(21);
-    rightDrive[0] = new WPI_TalonSRX(22);
-    rightDrive[1] = new WPI_TalonSRX(23);
-    left.setInverted(false);
-    right.setInverted(true);
+
   }
 
 
@@ -71,12 +59,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-    System.out.println(steeringWheel.getX());
-    if(steeringWheel.getShifterPressed(GenericHID.Hand.kLeft)){
-      gearShift.set(DoubleSolenoid.Value.kForward);
-    } else if(steeringWheel.getShifterPressed(GenericHID.Hand.kRight)){
-      gearShift.set(DoubleSolenoid.Value.kReverse);
-    }
+
   }
 
 
