@@ -26,8 +26,11 @@ public class BumperDriveCommand extends Command {
     @Override
     protected void execute() {
 
-        boolean isLeftPressed = OI.getInstance().getSteeringWheel().getShifter(GenericHID.Hand.kLeft);
-        boolean isRightPressed = OI.getInstance().getSteeringWheel().getShifter(GenericHID.Hand.kRight);
+        //boolean isLeftPressed = OI.getInstance().getSteeringWheel().getShifter(GenericHID.Hand.kLeft);
+        //boolean isRightPressed = OI.getInstance().getSteeringWheel().getShifter(GenericHID.Hand.kRight);
+
+        boolean isLeftPressed = OI.getInstance().getXboxController().getBumper(GenericHID.Hand.kLeft);
+        boolean isRightPressed = OI.getInstance().getXboxController().getBumper(GenericHID.Hand.kRight);
 
         if(speed < 0){ //if going backward
             //make if left pressed, right pressed and if nothing pressed

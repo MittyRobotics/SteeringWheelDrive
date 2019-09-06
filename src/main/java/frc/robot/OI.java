@@ -2,12 +2,14 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.Button;
 
 
 public class OI {
 	private Joystick joystick;
 	private SteeringWheel wheel;
+	private XboxController xboxController;
 	private static OI ourInstance = new OI();
 
 	public static OI getInstance() {
@@ -25,12 +27,19 @@ public class OI {
 		return joystick;
 	}
 
-	public SteeringWheel getSteeringWheel(){
+	public XboxController getXboxController(){
+		if(xboxController == null) {
+			xboxController = new XboxController(0);
+		}
+		return xboxController;
+	}
+
+	/*public SteeringWheel getSteeringWheel(){
 		if(wheel == null){
 			wheel = new SteeringWheel(0);
 		}
 		return wheel;
-	}
+	}*/
 
 	private void driveControls(){
 
