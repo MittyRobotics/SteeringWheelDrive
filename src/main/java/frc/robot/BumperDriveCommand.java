@@ -29,25 +29,101 @@ public class BumperDriveCommand extends Command {
         boolean isLeftPressed = OI.getInstance().getSteeringWheel().getShifter(GenericHID.Hand.kLeft);
         boolean isRightPressed = OI.getInstance().getSteeringWheel().getShifter(GenericHID.Hand.kRight);
 
-        if(speed < 0){
+        if(speed < 0){ //if going backward
             //make if left pressed, right pressed and if nothing pressed
-            // if left pressed while negative then increment speed by negative acceleration CAP speed
-            // if right pressed while negative then increment speed by positive acc past 0
 
+            if (isLeftPressed){ //left bumper
+
+                if(speed > -1){ //capped speed
+
+                    acceleration = -0.01;
+
+                } else {
+
+                    acceleration = 0;
+
+                }
+
+            }
+            else if (isRightPressed){ //right bumper
+
+                acceleration = 0.01;
+
+            }
+            else { //let go both bumpers
+
+                if (speed < 0){
+
+                    acceleration = 0.01;
+
+                } else {
+
+                    acceleration = 0;
+
+                }
+
+            }
 
         }
 
-        if (speed == 0){
+        if (speed == 0){ //robot at rest
             //make if left pressed, right pressed and if nothing pressed
 
+            if (isLeftPressed){ //left bumper
+
+                acceleration = -0.01;
+
+            }
+            else if (isRightPressed){ //right bumper
+
+                acceleration = 0.01;
+
+            }
+            else { //let go both
+
+                acceleration = 0;
+
+            }
 
         }
 
-        if(speed > 0){
+        if(speed > 0){ //going forward
             //make if left pressed, right pressed and if nothing pressed
 
+            if (isLeftPressed){ //left bumper
+
+                acceleration = -0.01;
+
+            }
+            else if (isRightPressed){ //right bumper
+
+                if (speed < 1){ //capped speed
+
+                    acceleration = 0.01;
+
+                } else {
+
+                    acceleration = 0;
+
+                }
+
+            }
+            else { //let go both
+
+                if (speed > 0) {
+
+                    acceleration = -0.01;
+
+                } else {
+
+                    acceleration = 0;
+
+                }
+
+            }
 
         }
+
         speed += acceleration;
         DriveTrain.getInstance().tankDrive(speed, speed);
     }
