@@ -34,14 +34,18 @@ public class CompassSteering extends Command {
         else if (steerWheelValue < 0){
             steerWheelValue = 360 + steerWheelValue;
         }
-        int s = 5;
-        if ( (steerWheelValue - Gyro.getInstance().getAngle() ) > s){
-            controller.setSetpoint(Gyro.getInstance().getAngle() + s);
 
+        int step = 5;
+        if (steerWheelValue > Gyro.getInstance().getAngle() + step) {
+                controller.setSetpoint(Gyro.getInstance().getAngle() + step);
+        }
+        else if (steerWheelValue < Gyro.getInstance().getAngle() - step) {
+                controller.setSetpoint(Gyro.getInstance().getAngle() - step);
         }
         else {
             controller.setSetpoint(steerWheelValue);
         }
+
         //Gyro.getInstance().getAngle()
         DriveTrain.getInstance().tankDrive(controller.get(), -controller.get());
     }
