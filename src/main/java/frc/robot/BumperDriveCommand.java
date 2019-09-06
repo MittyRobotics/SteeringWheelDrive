@@ -31,97 +31,58 @@ public class BumperDriveCommand extends Command {
 
         if(speed < 0){ //if going backward
             //make if left pressed, right pressed and if nothing pressed
-
             if (isLeftPressed){ //left bumper
-
                 if(speed > -1){ //capped speed
-
                     acceleration = -0.01;
-
                 } else {
-
                     acceleration = 0;
-
                 }
-
             }
             else if (isRightPressed){ //right bumper
-
                 acceleration = 0.01;
-
             }
             else { //let go both bumpers
-
                 if (speed < 0){
-
                     acceleration = 0.01;
-
                 } else {
-
                     acceleration = 0;
-
                 }
-
             }
-
         }
 
         if (speed == 0){ //robot at rest
             //make if left pressed, right pressed and if nothing pressed
-
             if (isLeftPressed){ //left bumper
-
                 acceleration = -0.01;
-
             }
             else if (isRightPressed){ //right bumper
-
                 acceleration = 0.01;
-
             }
             else { //let go both
-
                 acceleration = 0;
-
             }
-
         }
 
         if(speed > 0){ //going forward
             //make if left pressed, right pressed and if nothing pressed
-
             if (isLeftPressed){ //left bumper
-
                 acceleration = -0.01;
-
             }
             else if (isRightPressed){ //right bumper
-
                 if (speed < 1){ //capped speed
-
                     acceleration = 0.01;
-
                 } else {
-
                     acceleration = 0;
-
                 }
-
             }
             else { //let go both
-
                 if (speed > 0) {
-
                     acceleration = -0.01;
 
                 } else {
-
                     acceleration = 0;
-
                 }
-
             }
-
         }
 
         speed += acceleration;
