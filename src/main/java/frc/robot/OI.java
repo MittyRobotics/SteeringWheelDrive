@@ -34,12 +34,12 @@ public class OI {
 		return xboxController;
 	}
 
-	/*public SteeringWheel getSteeringWheel(){
+	public SteeringWheel getSteeringWheel(){
 		if(wheel == null){
 			wheel = new SteeringWheel(0);
 		}
 		return wheel;
-	}*/
+	}
 
 	private void driveControls(){
 
