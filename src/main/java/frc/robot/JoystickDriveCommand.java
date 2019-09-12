@@ -1,9 +1,7 @@
 package frc.robot;
 
-import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.DriveTrain;
-import frc.robot.OI;
+
 
 public class JoystickDriveCommand extends Command {
 
@@ -20,10 +18,10 @@ public class JoystickDriveCommand extends Command {
     @Override
     protected void execute() {
 
-        double leftSpeed = OI.getInstance().getJoystick().getY();
-        double rightSpeed = OI.getInstance().getJoystick().getY();
+        double speed = OI.getInstance().getJoystick().getY();
 
-        DriveTrain.getInstance().tankDrive(leftSpeed, rightSpeed);
+        DriveTrain.getInstance().tankDrive(speed, speed);
+
     }
 
     @Override
