@@ -46,7 +46,6 @@ public class CompassSteering extends Command {
             controller.setSetpoint(steerWheelValue);
         }
 
-        //Gyro.getInstance().getAngle()
         DriveTrain.getInstance().tankDrive(controller.get(), -controller.get());
     }
 

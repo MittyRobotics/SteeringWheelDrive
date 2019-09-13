@@ -34,14 +34,10 @@ public class JoystickDrive_CompassSteering extends Command { //example command
 
     @Override
     protected void execute(){
-
-        turn = OI.getInstance().getSteeringWheel().getX();
-        DriveTrain.getInstance().tankDrive(turn, -turn);
-
         double speed = OI.getInstance().getJoystick().getY();
-        double newSpeed = speed*e;
 
-        double steerWheelValue = (turn * 450;
+        double steerWheelValue = (OI.getInstance().getSteeringWheel().getX()) * 450;
+
         if (steerWheelValue > 360)  {
             steerWheelValue = steerWheelValue - 360;
         }
@@ -58,15 +54,12 @@ public class JoystickDrive_CompassSteering extends Command { //example command
         }
         else {
             controller.setSetpoint(steerWheelValue);
-
-
-        double newTurn = turn * (1-e);
-
         }
 
-        //Gyro.getInstance().getAngle()
+        turn = controller.get();
 
-
+        double newSpeed = speed * e;
+        double newTurn = turn * (1 - e);
 
         DriveTrain.getInstance().tankDrive(newSpeed + newTurn, newSpeed - newTurn);
     }
