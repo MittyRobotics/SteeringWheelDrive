@@ -11,7 +11,7 @@ public class JoystickDriveCommand extends Command {
         return ourInstance;
     }
 
-    private JoystickDriveCommand() {
+    public JoystickDriveCommand() {
         requires(DriveTrain.getInstance());
     }
 

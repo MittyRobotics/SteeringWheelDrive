@@ -24,12 +24,17 @@ public class CarDrive_CarSteering extends Command {
     @Override
     protected void execute(){
 
-        turn = OI.getInstance().getSteeringWheel().getX();
+        turn = OI.getInstance().getXboxController().getX(GenericHID.Hand.kLeft);
 
         boolean isLeftPressed = OI.getInstance().getXboxController().getBumper(GenericHID.Hand.kLeft);
         boolean isRightPressed = OI.getInstance().getXboxController().getBumper(GenericHID.Hand.kRight);
+        boolean brake = OI.getInstance().getXboxController().getAButton();
 
-        if(speed < 0){ //if going backward
+        if (brake) {
+            speed = 0;
+            acceleration = 0;
+        }
+        else if(speed < 0){ //if going backward
             //make if left pressed, right pressed and if nothing pressed
             if (isLeftPressed){ //left bumper
                 if(speed > -1){ //capped speed
@@ -50,7 +55,7 @@ public class CarDrive_CarSteering extends Command {
             }
         }
 
-        if (speed == 0){ //robot at rest
+        else if (speed == 0){ //robot at rest
             //make if left pressed, right pressed and if nothing pressed
             if (isLeftPressed){ //left bumper
                 acceleration = -0.01;
@@ -63,7 +68,7 @@ public class CarDrive_CarSteering extends Command {
             }
         }
 
-        if(speed > 0){ //going forward
+        else if(speed > 0){ //going forward
             //make if left pressed, right pressed and if nothing pressed
             if (isLeftPressed){ //left bumper
                 acceleration = -0.01;
@@ -90,7 +95,10 @@ public class CarDrive_CarSteering extends Command {
         double newSpeed = speed * e;
         double newTurn = turn * (1-e);
 
-        DriveTrain.getInstance().tankDrive(newSpeed + newTurn, newSpeed - newTurn);
+        if (speed > 0) {
+            DriveTrain.getInstance().tankDrive((newSpeed) + newTurn, (newSpeed) - newTurn);
+        }
+
 
     }
 

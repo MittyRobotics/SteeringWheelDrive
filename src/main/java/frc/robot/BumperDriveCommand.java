@@ -13,7 +13,7 @@ public class BumperDriveCommand extends Command {
         return ourInstance;
     }
 
-    private BumperDriveCommand() {
+    public BumperDriveCommand() {
         requires(DriveTrain.getInstance());
     }
 
@@ -31,8 +31,13 @@ public class BumperDriveCommand extends Command {
 
         boolean isLeftPressed = OI.getInstance().getXboxController().getBumper(GenericHID.Hand.kLeft);
         boolean isRightPressed = OI.getInstance().getXboxController().getBumper(GenericHID.Hand.kRight);
+        boolean brake = OI.getInstance().getXboxController().getAButton();
 
-        if(speed < 0){ //if going backward
+        if(brake){
+            speed = 0;
+            acceleration = 0;
+        }
+        else if(speed < 0){ //if going backward
             //make if left pressed, right pressed and if nothing pressed
             if (isLeftPressed){ //left bumper
                 if(speed > -1){ //capped speed
@@ -53,7 +58,7 @@ public class BumperDriveCommand extends Command {
             }
         }
 
-        if (speed == 0){ //robot at rest
+        else if (speed == 0){ //robot at rest
             //make if left pressed, right pressed and if nothing pressed
             if (isLeftPressed){ //left bumper
                 acceleration = -0.01;
@@ -66,7 +71,7 @@ public class BumperDriveCommand extends Command {
             }
         }
 
-        if(speed > 0){ //going forward
+        else if(speed > 0){ //going forward
             //make if left pressed, right pressed and if nothing pressed
             if (isLeftPressed){ //left bumper
                 acceleration = -0.01;
@@ -89,7 +94,7 @@ public class BumperDriveCommand extends Command {
         }
 
         speed += acceleration;
-        DriveTrain.getInstance().tankDrive(speed, speed);
+        DriveTrain.getInstance().tankDrive(speed*0.5, speed*0.5);
     }
 
     @Override

@@ -29,14 +29,14 @@ public class OI {
 
 	public XboxController getXboxController(){
 		if(xboxController == null) {
-			xboxController = new XboxController(0);
+			xboxController = new XboxController(2);
 		}
 		return xboxController;
 	}
 
 	public SteeringWheel getSteeringWheel(){
 		if(wheel == null){
-			wheel = new SteeringWheel(0);
+			wheel = new SteeringWheel(3);
 		}
 		return wheel;
 	}
