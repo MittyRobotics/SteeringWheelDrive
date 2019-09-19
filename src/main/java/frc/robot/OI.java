@@ -36,7 +36,7 @@ public class OI {
 
 	public SteeringWheel getSteeringWheel(){
 		if(wheel == null){
-			wheel = new SteeringWheel(3);
+			wheel = new SteeringWheel(0);
 		}
 		return wheel;
 	}
