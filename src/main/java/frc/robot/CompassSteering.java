@@ -3,12 +3,17 @@ package frc.robot;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.command.Command;
+import jdk.jfr.Frequency;
 
 public class CompassSteering extends Command {
     PIDController controller;
     @Override
     protected boolean isFinished() {
         return false;
+    }
+
+    public CompassSteering(){
+        requires(DriveTrain.getInstance());
     }
 
     @Override
