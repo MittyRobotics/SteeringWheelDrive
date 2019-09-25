@@ -25,7 +25,7 @@ public class CompassSteering extends Command {
             }
         };
         controller = new PIDController(PID.TURN[0], PID.TURN[1], PID.TURN[2], Gyro.getInstance(), pidOutput);
-        controller.setInputRange(0, 360);
+        controller.setInputRange(-180, 180);
         controller.setOutputRange(-1, 1);
         controller.enable();
     }
@@ -33,11 +33,14 @@ public class CompassSteering extends Command {
     @Override
     protected void execute() {
         double steerWheelValue = (OI.getInstance().getSteeringWheel().getX()) * 450;
-        if (steerWheelValue > 360)  {
-            steerWheelValue = steerWheelValue - 360;
+        if ((steerWheelValue > 180) && (steerWheelValue < 360)) {
+            steerWheelValue = (360 - steerWheelValue) * -1;
         }
-        else if (steerWheelValue < 0){
+        else if (steerWheelValue < -180){
             steerWheelValue = 360 + steerWheelValue;
+        }
+        if (steerWheelValue > 360) {
+            steerWheelValue = 360 - steerWheelValue;
         }
 
         int step = 5;
