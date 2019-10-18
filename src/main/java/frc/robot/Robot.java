@@ -8,6 +8,8 @@
 package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
@@ -31,6 +33,7 @@ public class Robot extends TimedRobot {
    * used for any initialization code.
    */
   @SuppressWarnings("ResultOfMethodCallIgnored")
+  CANSparkMax canSparkMax = new CANSparkMax(0, CANSparkMaxLowLevel.MotorType.kBrushless);
   @Override
   public void robotInit() {
     DriveTrain.getInstance();
