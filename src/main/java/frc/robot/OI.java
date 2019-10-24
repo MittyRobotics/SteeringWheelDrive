@@ -6,10 +6,12 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.Button;
 
 
+
 public class OI {
 	private Joystick joystick;
 	private SteeringWheel wheel;
 	private XboxController xboxController;
+
 	private static OI ourInstance = new OI();
 
 	public static OI getInstance() {
@@ -19,6 +21,9 @@ public class OI {
 	private OI() {
 		driveControls();
 	}
+
+
+
 
 	public Joystick getJoystick(){
 		if(joystick == null){
