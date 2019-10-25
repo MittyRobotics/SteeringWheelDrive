@@ -7,6 +7,7 @@ import frc.robot.DriveTrain;
 public class BumperDriveCommand extends Command {
     private double speed;
     private double acceleration;
+
     private static BumperDriveCommand ourInstance = new BumperDriveCommand();
 
     public static BumperDriveCommand getInstance() {

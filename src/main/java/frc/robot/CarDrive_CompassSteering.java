@@ -23,14 +23,10 @@ public class CarDrive_CompassSteering extends Command {
         speed = 0;
         acceleration = 0;
 
-        PIDOutput pidOutput = new PIDOutput() {
-            @Override
-            public void pidWrite(double output) {
+        PIDOutput pidOutput = output -> {
 
-            }
         };
         controller = new PIDController(PID.TURN[0], PID.TURN[1], PID.TURN[2], Gyro.getInstance(), pidOutput);
-        controller.setInputRange(0, 360);
         controller.setOutputRange(-1, 1);
         controller.enable();
 
@@ -39,20 +35,8 @@ public class CarDrive_CompassSteering extends Command {
     @Override
     protected void execute(){
 
+//CompassSteering
         double steerWheelValue = (OI.getInstance().getSteeringWheel().getX()) * 450;
-//        if ((steerWheelValue > 180) && (steerWheelValue < 360)) {
-//            steerWheelValue = (360 - steerWheelValue) * -1;
-//        }
-//        if (steerWheelValue < -180){
-//            steerWheelValue = 360 + steerWheelValue;
-//        }
-//        if (steerWheelValue > 360) {
-//            steerWheelValue = steerWheelValue-360;
-//        }
-        //      if(steerWheelValue < -360){
-        //  steerWheelValue = -360+ steerWheelValue;
-        //     }
-
 
         int step = 10;
         if (steerWheelValue > Gyro.getInstance().getAngle() + step) {
@@ -65,59 +49,67 @@ public class CarDrive_CompassSteering extends Command {
             controller.setSetpoint(steerWheelValue);
         }
 
-        boolean isLeftPressed = OI.getInstance().getSteeringWheel().getBumper(GenericHID.Hand.kRight);
-        boolean isRightPressed = OI.getInstance().getSteeringWheel().getBumper(GenericHID.Hand.kLeft);
+        //DriveTrain.getInstance().tankDrive(controller.get(), -controller.get());
+
+//BumperDriveCommand
+        boolean isLeftPressed = OI.getInstance().getSteeringWheel().getShifter(GenericHID.Hand.kRight);
+        boolean isRightPressed = OI.getInstance().getSteeringWheel().getShifter(GenericHID.Hand.kLeft);
         boolean brake = OI.getInstance().getSteeringWheel().getAButton();
 
-        if(speed < 0){ //if going backward
+        if (brake) {
+            speed = 0;
+            acceleration = 0;
+            turn = 0;
+        }
+        else if(speed < 0){ //if going backward
             //make if left pressed, right pressed and if nothing pressed
             if (isLeftPressed){ //left bumper
                 if(speed > -1){ //capped speed
-                    acceleration = -0.01;
+                    acceleration = -0.07;
                 } else {
                     acceleration = 0;
                 }
             }
             else if (isRightPressed){ //right bumper
-                acceleration = 0.01;
+                acceleration = 0.05;
             }
             else { //let go both bumpers
                 if (speed < 0){
-                    acceleration = 0.01;
+                    acceleration = 0.07;
                 } else {
                     acceleration = 0;
                 }
             }
         }
 
-        if (speed == 0){ //robot at rest
+        else if (speed == 0){ //robot at rest
             //make if left pressed, right pressed and if nothing pressed
             if (isLeftPressed){ //left bumper
-                acceleration = -0.01;
+                acceleration = -0.07;
             }
             else if (isRightPressed){ //right bumper
-                acceleration = 0.01;
+                acceleration = 0.07;
             }
             else { //let go both
                 acceleration = 0;
             }
         }
 
-        if(speed > 0){ //going forward
+        else if(speed > 0){ //going forward
             //make if left pressed, right pressed and if nothing pressed
             if (isLeftPressed){ //left bumper
-                acceleration = -0.01;
+                acceleration = -0.07;
             }
             else if (isRightPressed){ //right bumper
                 if (speed < 1){ //capped speed
-                    acceleration = 0.01;
+                    acceleration = 0.07;
                 } else {
                     acceleration = 0;
                 }
             }
             else { //let go both
                 if (speed > 0) {
-                    acceleration = -0.01;
+                    acceleration = -0.07;
 
                 } else {
                     acceleration = 0;
@@ -132,8 +124,19 @@ public class CarDrive_CompassSteering extends Command {
         double newSpeed = speed * e;
         double newTurn = turn * (1 - e);
 
+        if(Math.abs(speed) < 0.1){
+            DriveTrain.getInstance().tankDrive(turn, -turn);
+        }
 
-        DriveTrain.getInstance().tankDrive(newSpeed - newTurn, newSpeed + newTurn);
+        if (speed > 0) {
+            DriveTrain.getInstance().tankDrive((newSpeed) - newTurn, (newSpeed) + newTurn);
+        }
+        else if (speed < 0) {
+            DriveTrain.getInstance().tankDrive((newSpeed) + newTurn, (newSpeed) - newTurn);
+        }
+
+
+        //DriveTrain.getInstance().tankDrive(newSpeed - newTurn, newSpeed + newTurn);
 
 
     }

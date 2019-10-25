@@ -112,8 +112,8 @@ public class CarDrive_CarSteering extends Command {
             DriveTrain.getInstance().tankDrive((newSpeed) + newTurn, (newSpeed) - newTurn);
         }
 
-        System.out.println("Speed" + newSpeed);
-        System.out.println("Turn" + newTurn);
+        //System.out.println("Speed" + newSpeed);
+        //System.out.println("Turn" + newTurn);
 
 
     }
