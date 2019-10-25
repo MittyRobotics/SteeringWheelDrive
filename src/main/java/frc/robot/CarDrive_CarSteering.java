@@ -27,8 +27,8 @@ public class CarDrive_CarSteering extends Command {
         //turn = OI.getInstance().getXboxController().getX(GenericHID.Hand.kLeft);
         double turn = OI.getInstance().getSteeringWheel().getX()*4;
 
-        boolean isLeftPressed = OI.getInstance().getSteeringWheel().getShifter(GenericHID.Hand.kLeft);
-        boolean isRightPressed = OI.getInstance().getSteeringWheel().getShifter(GenericHID.Hand.kRight);
+        boolean isLeftPressed = OI.getInstance().getSteeringWheel().getShifter(GenericHID.Hand.kRight);
+        boolean isRightPressed = OI.getInstance().getSteeringWheel().getShifter(GenericHID.Hand.kLeft);
         boolean brake = OI.getInstance().getSteeringWheel().getAButton();
 
         //boolean isLeftPressed = OI.getInstance().getXboxController().getBumper(GenericHID.Hand.kLeft);

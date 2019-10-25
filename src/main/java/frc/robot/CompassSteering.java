@@ -18,11 +18,7 @@ public class CompassSteering extends Command {
 
     @Override
     protected void initialize(){
-        PIDOutput pidOutput = new PIDOutput() {
-            @Override
-            public void pidWrite(double output) {
-
-            }
+        PIDOutput pidOutput = output -> {
 
         };
         controller = new PIDController(PID.TURN[0], PID.TURN[1], PID.TURN[2], Gyro.getInstance(), pidOutput);
@@ -49,7 +45,7 @@ public class CompassSteering extends Command {
    //     }
 
 
-        int step = 5;
+        int step = 10;
         if (steerWheelValue > Gyro.getInstance().getAngle() + step) {
                 controller.setSetpoint(Gyro.getInstance().getAngle() + step);
         }
@@ -61,7 +57,9 @@ public class CompassSteering extends Command {
         }
 
         DriveTrain.getInstance().tankDrive(controller.get(), -controller.get());
-        System.out.println(steerWheelValue);
+//        System.out.println(steerWheelValue);
+//        System.out.print("Gyro: " + Gyro.getInstance().getAngle());
+//        System.out.print(step);
     }
 
 

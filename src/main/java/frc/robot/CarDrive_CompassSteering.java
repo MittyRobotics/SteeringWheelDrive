@@ -40,14 +40,21 @@ public class CarDrive_CompassSteering extends Command {
     protected void execute(){
 
         double steerWheelValue = (OI.getInstance().getSteeringWheel().getX()) * 450;
-        if (steerWheelValue > 360)  {
-            steerWheelValue = steerWheelValue - 360;
-        }
-        else if (steerWheelValue < 0){
-            steerWheelValue = 360 + steerWheelValue;
-        }
+//        if ((steerWheelValue > 180) && (steerWheelValue < 360)) {
+//            steerWheelValue = (360 - steerWheelValue) * -1;
+//        }
+//        if (steerWheelValue < -180){
+//            steerWheelValue = 360 + steerWheelValue;
+//        }
+//        if (steerWheelValue > 360) {
+//            steerWheelValue = steerWheelValue-360;
+//        }
+        //      if(steerWheelValue < -360){
+        //  steerWheelValue = -360+ steerWheelValue;
+        //     }
 
-        int step = 5;
+
+        int step = 10;
         if (steerWheelValue > Gyro.getInstance().getAngle() + step) {
             controller.setSetpoint(Gyro.getInstance().getAngle() + step);
         }
@@ -58,8 +65,9 @@ public class CarDrive_CompassSteering extends Command {
             controller.setSetpoint(steerWheelValue);
         }
 
-        boolean isLeftPressed = OI.getInstance().getXboxController().getBumper(GenericHID.Hand.kLeft);
-        boolean isRightPressed = OI.getInstance().getXboxController().getBumper(GenericHID.Hand.kRight);
+        boolean isLeftPressed = OI.getInstance().getSteeringWheel().getBumper(GenericHID.Hand.kRight);
+        boolean isRightPressed = OI.getInstance().getSteeringWheel().getBumper(GenericHID.Hand.kLeft);
+        boolean brake = OI.getInstance().getSteeringWheel().getAButton();
 
         if(speed < 0){ //if going backward
             //make if left pressed, right pressed and if nothing pressed

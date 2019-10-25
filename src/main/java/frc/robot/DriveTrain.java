@@ -23,10 +23,10 @@ public class DriveTrain extends Subsystem {
 	}
 
 	public void initHardware() {
-		leftDrive[0] = new WPI_TalonSRX(0);
-		leftDrive[1] = new WPI_TalonSRX(1);
-		rightDrive[0] = new WPI_TalonSRX(2);
-		rightDrive[1] = new WPI_TalonSRX(3);
+		leftDrive[0] = new WPI_TalonSRX(20);
+		leftDrive[1] = new WPI_TalonSRX(21);
+		rightDrive[0] = new WPI_TalonSRX(23);
+		rightDrive[1] = new WPI_TalonSRX(22);
 
 		leftDrive[0].setInverted(false);
 		leftDrive[1].setInverted(false);
@@ -57,8 +57,8 @@ public class DriveTrain extends Subsystem {
 
 	@Override
 	public void initDefaultCommand() {
-		//setDefaultCommand(new CarDrive_CarSteering());
-		setDefaultCommand(new JoystickDriveCommand());
+		//(new CompassSteering());
+		setDefaultCommand(new CarDrive_CompassSteering());
 	}
 
 	public void tankDrive(double left, double right) {
