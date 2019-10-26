@@ -29,7 +29,7 @@ public class CarDrive_CarSteering extends Command {
 
         boolean isLeftPressed = OI.getInstance().getSteeringWheel().getShifter(GenericHID.Hand.kRight);
         boolean isRightPressed = OI.getInstance().getSteeringWheel().getShifter(GenericHID.Hand.kLeft);
-        boolean brake = OI.getInstance().getSteeringWheel().getAButton();
+        boolean brake = OI.getInstance().getSteeringWheel().getBButton();
 
         //boolean isLeftPressed = OI.getInstance().getXboxController().getBumper(GenericHID.Hand.kLeft);
         //boolean isRightPressed = OI.getInstance().getXboxController().getBumper(GenericHID.Hand.kRight);
@@ -101,12 +101,12 @@ public class CarDrive_CarSteering extends Command {
         double newSpeed = speed * e;
         double newTurn = turn * (1-e);
 
-        if(Math.abs(speed) < 0.1){
+        if(Math.abs(speed) < 0.1 && !isLeftPressed && !isRightPressed){
             DriveTrain.getInstance().tankDrive(turn, -turn);
         }
 
         if (speed > 0) {
-            DriveTrain.getInstance().tankDrive((newSpeed) - newTurn, (newSpeed) + newTurn);
+            DriveTrain.getInstance().tankDrive((newSpeed) + newTurn, (newSpeed) - newTurn);
         }
         else if (speed < 0) {
             DriveTrain.getInstance().tankDrive((newSpeed) + newTurn, (newSpeed) - newTurn);

@@ -38,7 +38,7 @@ public class CarDrive_CompassSteering extends Command {
 //CompassSteering
         double steerWheelValue = (OI.getInstance().getSteeringWheel().getX()) * 450;
 
-        int step = 10;
+        int step = 15;
         if (steerWheelValue > Gyro.getInstance().getAngle() + step) {
             controller.setSetpoint(Gyro.getInstance().getAngle() + step);
         }
@@ -54,7 +54,7 @@ public class CarDrive_CompassSteering extends Command {
 //BumperDriveCommand
         boolean isLeftPressed = OI.getInstance().getSteeringWheel().getShifter(GenericHID.Hand.kRight);
         boolean isRightPressed = OI.getInstance().getSteeringWheel().getShifter(GenericHID.Hand.kLeft);
-        boolean brake = OI.getInstance().getSteeringWheel().getAButton();
+        boolean brake = OI.getInstance().getSteeringWheel().getBButton();
 
         if (brake) {
             speed = 0;
