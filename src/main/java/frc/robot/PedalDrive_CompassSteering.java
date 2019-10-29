@@ -34,7 +34,7 @@ public class PedalDrive_CompassSteering extends Command { //example command
 
     @Override
     protected void execute(){
-        double speed = OI.getInstance().getSteeringWheel().getGas();
+        double speed = 1 - OI.getInstance().getSteeringWheel().getGas();
 
         double steerWheelValue = (OI.getInstance().getSteeringWheel().getX()) * 450;
 
