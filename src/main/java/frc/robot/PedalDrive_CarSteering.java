@@ -23,15 +23,25 @@ public class PedalDrive_CarSteering extends Command { //example command
     protected void execute(){
 
         turn = OI.getInstance().getSteeringWheel().getX();
-        DriveTrain.getInstance().tankDrive(turn, -turn);
+        //DriveTrain.getInstance().tankDrive(turn, -turn);
 
         double speed = 1 - OI.getInstance().getSteeringWheel().getGas();
 
         double newSpeed = speed*e;
         double newTurn = turn * (1-e);
 
+        if(Math.abs(speed) < 0.1){
+            DriveTrain.getInstance().tankDrive(turn, -turn);
+        }
 
-        DriveTrain.getInstance().tankDrive(newSpeed + newTurn, newSpeed - newTurn);
+        if (speed > 0) {
+            DriveTrain.getInstance().tankDrive((newSpeed) - newTurn, (newSpeed) + newTurn);
+        }
+        else if (speed < 0) {
+            DriveTrain.getInstance().tankDrive((newSpeed) + newTurn, (newSpeed) - newTurn);
+        }
+
+        //DriveTrain.getInstance().tankDrive(newSpeed + newTurn, newSpeed - newTurn);
     }
 
     @Override
