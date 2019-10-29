@@ -26,7 +26,6 @@ public class PedalDrive_CarSteering extends Command { //example command
         //DriveTrain.getInstance().tankDrive(turn, -turn);
 
         double speed = 1 - OI.getInstance().getSteeringWheel().getGas();
-
         double newSpeed = speed*e;
         double newTurn = turn * (1-e);
 
