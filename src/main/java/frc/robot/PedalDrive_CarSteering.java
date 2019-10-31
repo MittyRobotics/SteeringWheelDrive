@@ -27,6 +27,12 @@ public class PedalDrive_CarSteering extends Command { //example command
 
         double speed = 1 - OI.getInstance().getSteeringWheel().getGas();
         boolean back = OI.getInstance().getSteeringWheel().getBButton();
+        double brake = OI.getInstance().getSteeringWheel().getBrake();
+
+        if ((brake > 0) && (brake < 1)) {
+            speed = 0;
+            turn = 0;
+        }
 
         if(back){
             speed *= -1;
