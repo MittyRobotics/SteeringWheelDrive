@@ -22,8 +22,8 @@ public class JoystickDrive_CarSteering extends Command { //example command
     @Override
     protected void execute(){
 
-        turn = OI.getInstance().getSteeringWheel().getX();
-        DriveTrain.getInstance().tankDrive(turn, -turn);
+        turn = OI.getInstance().getSteeringWheel().getX() * 450/180.0;
+        //DriveTrain.getInstance().tankDrive(turn, -turn);
 
         double speed = OI.getInstance().getJoystick().getY();
         boolean brake = OI.getInstance().getJoystick().getTriggerPressed();
