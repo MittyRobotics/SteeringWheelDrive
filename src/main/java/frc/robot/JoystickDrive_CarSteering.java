@@ -27,9 +27,13 @@ public class JoystickDrive_CarSteering extends Command { //example command
 
         double speed = OI.getInstance().getJoystick().getY();
 
+        if(OI.getInstance().getSteeringWheel().getBumperPressed(GenericHID.Hand.kLeft)){
+            speed = 0;
+            turn = 0;
+        }
+
         double newSpeed = speed*e;
         double newTurn = turn * (1-e);
-        
 
         DriveTrain.getInstance().tankDrive(newSpeed + newTurn, newSpeed - newTurn);
     }
