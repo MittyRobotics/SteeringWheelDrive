@@ -26,8 +26,9 @@ public class JoystickDrive_CarSteering extends Command { //example command
         DriveTrain.getInstance().tankDrive(turn, -turn);
 
         double speed = OI.getInstance().getJoystick().getY();
+        boolean brake = OI.getInstance().getSteeringWheel().getShifter(GenericHID.Hand.kLeft);
 
-        if(OI.getInstance().getSteeringWheel().getBumperPressed(GenericHID.Hand.kLeft)){
+        if(brake){
             speed = 0;
             turn = 0;
         }
