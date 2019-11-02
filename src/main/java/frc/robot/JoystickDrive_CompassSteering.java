@@ -1,5 +1,6 @@
 package frc.robot;
 
+
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
@@ -26,7 +27,7 @@ public class JoystickDrive_CompassSteering extends Command { //example command
             }
         };
         controller = new PIDController(PID.TURN[0], PID.TURN[1], PID.TURN[2], Gyro.getInstance(), pidOutput);
-        controller.setInputRange(0, 360);
+        //controller.setInputRange(0, 360);
         controller.setOutputRange(-1, 1);
         controller.enable();
 
@@ -34,18 +35,11 @@ public class JoystickDrive_CompassSteering extends Command { //example command
 
     @Override
     protected void execute(){
-        double speed = OI.getInstance().getJoystick().getY();
+        double speed = -OI.getInstance().getJoystick().getY();
 
         double steerWheelValue = (OI.getInstance().getSteeringWheel().getX()) * 450;
 
-        if (steerWheelValue > 360)  {
-            steerWheelValue = steerWheelValue - 360;
-        }
-        else if (steerWheelValue < 0){
-            steerWheelValue = 360 + steerWheelValue;
-        }
-
-        int step = 5;
+        int step = 15;
         if (steerWheelValue > Gyro.getInstance().getAngle() + step) {
             controller.setSetpoint(Gyro.getInstance().getAngle() + step);
         }
@@ -55,11 +49,8 @@ public class JoystickDrive_CompassSteering extends Command { //example command
         else {
             controller.setSetpoint(steerWheelValue);
         }
-
-        turn = controller.get();
-
-        double newSpeed = speed * e;
-        double newTurn = turn * (1 - e);
+        double newSpeed = speed * (1-controller.get());
+        double newTurn = controller.get();
 
         DriveTrain.getInstance().tankDrive(newSpeed + newTurn, newSpeed - newTurn);
     }

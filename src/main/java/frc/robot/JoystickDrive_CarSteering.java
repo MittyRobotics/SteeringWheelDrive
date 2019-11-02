@@ -8,9 +8,9 @@ import frc.robot.OI;
 public class JoystickDrive_CarSteering extends Command { //example command
 
     private double turn;
-    private double e = 0.7;
-
+    private double prevValue;
     public JoystickDrive_CarSteering(){
+        prevValue = 1;
         requires(DriveTrain.getInstance());
     }
 
@@ -22,11 +22,16 @@ public class JoystickDrive_CarSteering extends Command { //example command
     @Override
     protected void execute(){
 
-        turn = OI.getInstance().getSteeringWheel().getX() * 450/180.0;
+        turn = OI.getInstance().getSteeringWheel().getX() * 450/120;
         //DriveTrain.getInstance().tankDrive(turn, -turn);
 
-        double speed = OI.getInstance().getJoystick().getY();
-        boolean brake = OI.getInstance().getJoystick().getTriggerPressed();
+        double speed = -OI.getInstance().getJoystick().getY();
+        boolean brake = OI.getInstance().getJoystick().getTrigger();
+
+        if(Math.abs(turn) > 1){
+            turn = Math.signum(turn);
+        }
+        double e = 1 - turn;
 
         if(brake){
             speed = 0;
@@ -34,11 +39,20 @@ public class JoystickDrive_CarSteering extends Command { //example command
         }
 
         double newSpeed = speed*e;
-        double newTurn = turn * (1-e);
+        double newTurn = turn;
+        if(prevValue < 0 && speed == 0){
+            DriveTrain.getInstance().tankDrive(newSpeed-newTurn, newSpeed+newTurn);
+        }
+        else if(speed >= 0){
+            DriveTrain.getInstance().tankDrive(newSpeed + newTurn, newSpeed - newTurn);
+        } else {
+            DriveTrain.getInstance().tankDrive(newSpeed - newTurn, newSpeed + newTurn);
+        }
+        if(speed != 0){
+            prevValue = speed;
+        }
 
-        DriveTrain.getInstance().tankDrive(newSpeed + newTurn, newSpeed - newTurn);
     }
-
     @Override
     protected void end(){
 

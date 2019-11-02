@@ -58,7 +58,7 @@ public class DriveTrain extends Subsystem {
 	@Override
 	public void initDefaultCommand() {
 		//(new CompassSteering());
-		setDefaultCommand(new PedalDrive_CarSteering());
+		setDefaultCommand(new JoystickDrive_CarSteering());
 	}
 
 	public void tankDrive(double left, double right) {
