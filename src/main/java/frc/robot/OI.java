@@ -22,7 +22,7 @@ public class OI {
 
 	public Joystick getJoystick(){
 		if(joystick == null){
-			joystick = new Joystick(2);
+			joystick = new Joystick(1);
 		}
 		return joystick;
 	}

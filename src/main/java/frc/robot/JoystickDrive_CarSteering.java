@@ -40,17 +40,20 @@ public class JoystickDrive_CarSteering extends Command { //example command
 
         double newSpeed = speed*e;
         double newTurn = turn;
-        if(prevValue < 0 && speed == 0){
-            DriveTrain.getInstance().tankDrive(newSpeed-newTurn, newSpeed+newTurn);
+//        if(prevValue < 0 && speed < 0.05){
+//            DriveTrain.getInstance().tankDrive(newSpeed-newTurn, newSpeed+newTurn);
+//        }
+        if(Math.abs(speed) < 0.05){
+            DriveTrain.getInstance().tankDrive(newTurn, - newTurn);
         }
         else if(speed >= 0){
             DriveTrain.getInstance().tankDrive(newSpeed + newTurn, newSpeed - newTurn);
         } else {
             DriveTrain.getInstance().tankDrive(newSpeed - newTurn, newSpeed + newTurn);
         }
-        if(speed != 0){
-            prevValue = speed;
-        }
+//        if(Math.abs(speed) > 0.05){
+//            prevValue = speed;
+//        }
 
     }
     @Override
