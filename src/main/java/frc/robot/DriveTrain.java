@@ -67,4 +67,12 @@ public class DriveTrain extends Subsystem {
 		rightDrive[0].set(ControlMode.Velocity, right/ 10);
 	}
 
+	public double getLeftEncoder(){
+		return leftDrive[0].getSelectedSensorPosition();
+	}
+
+	public double getRightEncoder(){
+		return rightDrive[0].getSelectedSensorPosition();
+	}
+
 }
