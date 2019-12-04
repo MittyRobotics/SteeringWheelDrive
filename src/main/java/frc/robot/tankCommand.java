@@ -21,8 +21,8 @@ public class tankCommand extends Command {
 //
 //        DriveTrain.getInstance().tankVelocity(speed, speed);
 
-        System.out.println("Left: " + DriveTrain.getInstance().getLeftEncoder());
-        System.out.println("Right: " + DriveTrain.getInstance().getRightEncoder());
+//        System.out.println("Left: " + DriveTrain.getInstance().getLeftEncoder());
+//        System.out.println("Right: " + DriveTrain.getInstance().getRightEncoder());
 
     }
 

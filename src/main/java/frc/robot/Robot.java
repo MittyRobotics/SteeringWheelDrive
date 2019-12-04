@@ -65,6 +65,9 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
 
+    System.out.println("Left: " + DriveTrain.getInstance().getLeftEncoder());
+    System.out.println("Right: " + DriveTrain.getInstance().getRightEncoder());
+
   }
 
 
