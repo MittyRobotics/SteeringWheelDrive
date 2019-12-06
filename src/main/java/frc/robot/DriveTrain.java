@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class DriveTrain extends Subsystem {
+	public double ticksPerInches = 2101.0/(4*Math.PI);
 	private WPI_TalonSRX[] leftDrive = new WPI_TalonSRX[2];
 	private WPI_TalonSRX[] rightDrive = new WPI_TalonSRX[2];
 	private static DriveTrain ourInstance = new DriveTrain();
@@ -40,14 +41,14 @@ public class DriveTrain extends Subsystem {
 		rightDrive[0].setSensorPhase(true);
 
 		leftDrive[1].set(ControlMode.Follower, leftDrive[0].getDeviceID());
-		rightDrive[1].set(ControlMode.Follower, rightDrive[0].getDeviceID());
+		rightDrive[0].set(ControlMode.Follower, rightDrive[1].getDeviceID());
 
 		leftDrive[0].config_kP(0, PID.DRIVE_VELOCITY[0]);
 		leftDrive[0].config_kI(0, PID.DRIVE_VELOCITY[1]);
 		leftDrive[0].config_kD(0, PID.DRIVE_VELOCITY[2]);
-		rightDrive[0].config_kP(0, PID.DRIVE_VELOCITY[0]);
-		rightDrive[0].config_kI(0, PID.DRIVE_VELOCITY[1]);
-		rightDrive[0].config_kD(0, PID.DRIVE_VELOCITY[2]);
+		rightDrive[1].config_kP(0, PID.DRIVE_VELOCITY[0]);
+		rightDrive[1].config_kI(0, PID.DRIVE_VELOCITY[1]);
+		rightDrive[1].config_kD(0, PID.DRIVE_VELOCITY[2]);
 
 		leftDrive[0].setNeutralMode(NeutralMode.Brake);
 		leftDrive[1].setNeutralMode(NeutralMode.Brake);
@@ -61,18 +62,37 @@ public class DriveTrain extends Subsystem {
 	}
 
 	public void tankVelocity(double left, double right) {
-		left *= 79.68;
-		right *= 79.68;
-		leftDrive[0].set(ControlMode.Velocity, left / 10);
-		rightDrive[0].set(ControlMode.Velocity, right/ 10);
+		left *=  2101.0/(4*Math.PI);
+		right *= 2101.0/(4*Math.PI);
+		//leftDrive[0].set(ControlMode.Velocity, (left / 10));
+		//rightDrive[1].set(ControlMode.Velocity, (right/ 10));
+	}
+
+	public void tankPosition(double left, double right) {
+		left *=  2101.0/(4*Math.PI);
+		right *= 2101.0/(4*Math.PI);
+		leftDrive[0].set(ControlMode.Position, left);
+		rightDrive[1].set(ControlMode.Position, right);
 	}
 
 	public double getLeftEncoder(){
-		return leftDrive[0].getSelectedSensorPosition();
+
+		return leftDrive[0].getSelectedSensorPosition()/ticksPerInches;
+
 	}
 
 	public double getRightEncoder(){
-		return rightDrive[0].getSelectedSensorPosition();
+		return rightDrive[1].getSelectedSensorPosition()/ticksPerInches;
 	}
+
+	public void resetLeftEncoder(){
+		leftDrive[0].setSelectedSensorPosition(0);
+	}
+
+	public void resetRightEncoder(){
+		rightDrive[1].setSelectedSensorPosition(0);
+	}
+
+
 
 }

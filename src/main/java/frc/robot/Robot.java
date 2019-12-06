@@ -38,6 +38,10 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     DriveTrain.getInstance();
     DriveTrain.getInstance().initHardware();
+
+    DriveTrain.getInstance().resetLeftEncoder();
+    DriveTrain.getInstance().resetRightEncoder();
+
   }
 
 
@@ -62,6 +66,12 @@ public class Robot extends TimedRobot {
   /**
    * This function is called periodically during operator control.
    */
+  @Override
+  public void teleopInit() {
+
+    DriveTrain.getInstance().tankPosition(60, 60);
+
+  }
   @Override
   public void teleopPeriodic() {
 
