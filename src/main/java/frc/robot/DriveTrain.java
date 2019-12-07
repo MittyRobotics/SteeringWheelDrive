@@ -64,8 +64,8 @@ public class DriveTrain extends Subsystem {
 	public void tankVelocity(double left, double right) {
 		left *=  2101.0/(4*Math.PI);
 		right *= 2101.0/(4*Math.PI);
-		//leftDrive[0].set(ControlMode.Velocity, (left / 10));
-		//rightDrive[1].set(ControlMode.Velocity, (right/ 10));
+		leftDrive[0].set(ControlMode.Velocity, (left / 10));
+		rightDrive[1].set(ControlMode.Velocity, (right/ 10));
 	}
 
 	public void tankPosition(double left, double right) {
@@ -75,14 +75,25 @@ public class DriveTrain extends Subsystem {
 		rightDrive[1].set(ControlMode.Position, right);
 	}
 
-	public double getLeftEncoder(){
+	public double getLeftEncoderPosition(){
 
 		return leftDrive[0].getSelectedSensorPosition()/ticksPerInches;
 
 	}
 
-	public double getRightEncoder(){
+	public double getRightEncoderPosition(){
 		return rightDrive[1].getSelectedSensorPosition()/ticksPerInches;
+	}
+
+	public double getLeftEncoderVelocity(){
+
+		return leftDrive[0].getSelectedSensorVelocity()/ticksPerInches;
+
+	}
+
+	public double getRightEncoderVelocity(){
+
+		return rightDrive[1].getSelectedSensorVelocity()/ticksPerInches;
 	}
 
 	public void resetLeftEncoder(){

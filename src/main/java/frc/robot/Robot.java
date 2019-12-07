@@ -69,14 +69,14 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopInit() {
 
-    DriveTrain.getInstance().tankPosition(60, 60);
+    DriveTrain.getInstance().tankPosition(10, 10);
 
   }
   @Override
   public void teleopPeriodic() {
 
-    System.out.println("Left: " + DriveTrain.getInstance().getLeftEncoder());
-    System.out.println("Right: " + DriveTrain.getInstance().getRightEncoder());
+    System.out.println("Left: " + DriveTrain.getInstance().getLeftEncoderVelocity());
+    System.out.println("Right: " + DriveTrain.getInstance().getRightEncoderVelocity());
 
   }
 
