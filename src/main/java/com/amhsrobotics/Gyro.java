@@ -1,4 +1,4 @@
-package frc.robot;
+package com.amhsrobotics;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 

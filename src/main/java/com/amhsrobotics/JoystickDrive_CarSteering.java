@@ -1,16 +1,10 @@
-package frc.robot;
+package com.amhsrobotics;
 
-import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.DriveTrain;
-import frc.robot.OI;
 
-public class JoystickDrive_CarSteering extends Command { //example command
+public class JoystickDrive_CarSteering extends Command {
 
-    private double turn;
-    private double prevValue;
-    public JoystickDrive_CarSteering(){
-        prevValue = 1;
+    JoystickDrive_CarSteering(){
         requires(DriveTrain.getInstance());
     }
 
@@ -22,8 +16,7 @@ public class JoystickDrive_CarSteering extends Command { //example command
     @Override
     protected void execute(){
 
-        turn = OI.getInstance().getSteeringWheel().getX() * 450/120;
-        //DriveTrain.getInstance().tankDrive(turn, -turn);
+        double turn = OI.getInstance().getSteeringWheel().getX() * 450 / 120;
 
         double speed = -OI.getInstance().getJoystick().getY();
         boolean brake = OI.getInstance().getJoystick().getTrigger();
@@ -40,9 +33,6 @@ public class JoystickDrive_CarSteering extends Command { //example command
 
         double newSpeed = speed*e;
         double newTurn = turn;
-//        if(prevValue < 0 && speed < 0.05){
-//            DriveTrain.getInstance().tankDrive(newSpeed-newTurn, newSpeed+newTurn);
-//        }
         if(Math.abs(speed) < 0.05){
             DriveTrain.getInstance().tankDrive(newTurn, - newTurn);
         }
@@ -51,9 +41,6 @@ public class JoystickDrive_CarSteering extends Command { //example command
         } else {
             DriveTrain.getInstance().tankDrive(newSpeed - newTurn, newSpeed + newTurn);
         }
-//        if(Math.abs(speed) > 0.05){
-//            prevValue = speed;
-//        }
 
     }
     @Override

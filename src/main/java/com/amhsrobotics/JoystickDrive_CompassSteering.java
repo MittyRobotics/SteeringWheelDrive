@@ -1,18 +1,12 @@
-package frc.robot;
+package com.amhsrobotics;
 
 
-import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.DriveTrain;
-import frc.robot.OI;
 
-public class JoystickDrive_CompassSteering extends Command { //example command
-    PIDController controller;
-
-    private double turn;
-    private double e = 0.7;
+public class JoystickDrive_CompassSteering extends Command {
+    private PIDController controller;
 
     public JoystickDrive_CompassSteering(){
         requires(DriveTrain.getInstance());
@@ -20,14 +14,10 @@ public class JoystickDrive_CompassSteering extends Command { //example command
 
     @Override
     protected void initialize(){
-        PIDOutput pidOutput = new PIDOutput() {
-            @Override
-            public void pidWrite(double output) {
+        PIDOutput pidOutput = output -> {
 
-            }
         };
         controller = new PIDController(PID.TURN[0], PID.TURN[1], PID.TURN[2], Gyro.getInstance(), pidOutput);
-        //controller.setInputRange(0, 360);
         controller.setOutputRange(-1, 1);
         controller.enable();
 

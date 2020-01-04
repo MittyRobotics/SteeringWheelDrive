@@ -1,4 +1,4 @@
-package frc.robot;
+package com.amhsrobotics;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.PIDController;
@@ -7,12 +7,10 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class CarDrive_CompassSteering extends Command {
 
-    PIDController controller;
+    private PIDController controller;
 
     private double speed;
     private double acceleration;
-    private double turn;
-    private double e = 0.7; //emphasis var
 
     public CarDrive_CompassSteering(){
         requires(DriveTrain.getInstance());
@@ -49,19 +47,13 @@ public class CarDrive_CompassSteering extends Command {
             controller.setSetpoint(steerWheelValue);
         }
 
-        //DriveTrain.getInstance().tankDrive(controller.get(), -controller.get());
-
 //BumperDriveCommand
         boolean isLeftPressed = OI.getInstance().getSteeringWheel().getShifter(GenericHID.Hand.kRight);
         boolean isRightPressed = OI.getInstance().getSteeringWheel().getShifter(GenericHID.Hand.kLeft);
         boolean brake = OI.getInstance().getSteeringWheel().getBButton();
 
-        if (brake) {
-            speed = 0;
-            acceleration = 0;
-            turn = 0;
-        }
-        else if(speed < 0){ //if going backward
+        double turn;
+        if(speed < 0){ //if going backward
             //make if left pressed, right pressed and if nothing pressed
             if (isLeftPressed){ //left bumper
                 if(speed > -1){ //capped speed
@@ -121,24 +113,20 @@ public class CarDrive_CompassSteering extends Command {
 
         turn = controller.get();
 
-        double newSpeed = speed * e;
-        double newTurn = turn * (1 - e);
+        //emphasis var
+        final double DRIVE_EMPHASIS = 0.7;
+        double newSpeed = speed * DRIVE_EMPHASIS;
+        double newTurn = turn * (1 - DRIVE_EMPHASIS);
 
-        if(Math.abs(speed) < 0.1){
+        if(brake){
+            DriveTrain.getInstance().tankDrive(0, 0);
+        } else if(Math.abs(speed) < 0.1){
             DriveTrain.getInstance().tankDrive(turn, -turn);
-        }
-
-        if (speed > 0) {
+        } else if (speed > 0) {
             DriveTrain.getInstance().tankDrive((newSpeed) - newTurn, (newSpeed) + newTurn);
-        }
-        else if (speed < 0) {
+        } else {
             DriveTrain.getInstance().tankDrive((newSpeed) + newTurn, (newSpeed) - newTurn);
         }
-
-
-        //DriveTrain.getInstance().tankDrive(newSpeed - newTurn, newSpeed + newTurn);
-
-
     }
 
     @Override

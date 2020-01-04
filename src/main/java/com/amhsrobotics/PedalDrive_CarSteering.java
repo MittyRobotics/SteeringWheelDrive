@@ -1,14 +1,8 @@
-package frc.robot;
+package com.amhsrobotics;
 
-import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.DriveTrain;
-import frc.robot.OI;
 
-public class PedalDrive_CarSteering extends Command { //example command
-
-    private double turn;
-    private double e = 0.5;
+public class PedalDrive_CarSteering extends Command {
 
     public PedalDrive_CarSteering(){
         requires(DriveTrain.getInstance());
@@ -22,9 +16,7 @@ public class PedalDrive_CarSteering extends Command { //example command
     @Override
     protected void execute(){
 
-        turn = OI.getInstance().getSteeringWheel().getX() * 450/180.0;
-        //DriveTrain.getInstance().tankDrive(turn, -turn);
-
+        double turn = OI.getInstance().getSteeringWheel().getX() * 450 / 180.0;
         double speed = 1 - OI.getInstance().getSteeringWheel().getGas();
         boolean back = OI.getInstance().getSteeringWheel().getBButton();
         double brake = OI.getInstance().getSteeringWheel().getBrake();
@@ -45,8 +37,9 @@ public class PedalDrive_CarSteering extends Command { //example command
             turn = -1;
         }
 
-        double newSpeed = speed*e;
-        double newTurn = turn * (1-e);
+        final double DRIVE_EMPHASIS = 0.5;
+        double newSpeed = speed* DRIVE_EMPHASIS;
+        double newTurn = turn * (1- DRIVE_EMPHASIS);
 
         if(Math.abs(speed) < 0.1){
             DriveTrain.getInstance().tankDrive(turn, -turn);
@@ -58,8 +51,6 @@ public class PedalDrive_CarSteering extends Command { //example command
         else if (speed < 0) {
             DriveTrain.getInstance().tankDrive((newSpeed) - newTurn, (newSpeed) + newTurn);
         }
-
-        //DriveTrain.getInstance().tankDrive(newSpeed + newTurn, newSpeed - newTurn);
     }
 
     @Override
