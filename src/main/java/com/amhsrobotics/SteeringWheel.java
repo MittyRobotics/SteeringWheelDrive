@@ -1,8 +1,9 @@
-package frc.robot;
+package com.amhsrobotics;
 
 import edu.wpi.first.wpilibj.GenericHID;
 
 public class SteeringWheel extends GenericHID {
+
 	public SteeringWheel(int port) {
 		super(port);
 	}
@@ -95,6 +96,7 @@ public class SteeringWheel extends GenericHID {
 		return getRawButtonReleased(Buttons.Y.value);
 	}
 
+	//bumpers
 	public boolean getShifter(Hand hand){
 		switch (hand){
 			case kLeft:

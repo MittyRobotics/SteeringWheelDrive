@@ -1,7 +1,8 @@
-package frc.robot;
+package com.amhsrobotics;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -23,8 +24,8 @@ public class DriveTrain extends Subsystem {
 	public void initHardware() {
 		leftDrive[0] = new WPI_TalonSRX(20);
 		leftDrive[1] = new WPI_TalonSRX(21);
-		rightDrive[0] = new WPI_TalonSRX(22);
-		rightDrive[1] = new WPI_TalonSRX(23);
+		rightDrive[0] = new WPI_TalonSRX(23);
+		rightDrive[1] = new WPI_TalonSRX(22);
 
 		leftDrive[0].setInverted(false);
 		leftDrive[1].setInverted(false);
@@ -46,11 +47,17 @@ public class DriveTrain extends Subsystem {
 		rightDrive[0].config_kP(0, PID.DRIVE_VELOCITY[0]);
 		rightDrive[0].config_kI(0, PID.DRIVE_VELOCITY[1]);
 		rightDrive[0].config_kD(0, PID.DRIVE_VELOCITY[2]);
+
+		leftDrive[0].setNeutralMode(NeutralMode.Brake);
+		leftDrive[1].setNeutralMode(NeutralMode.Brake);
+		rightDrive[0].setNeutralMode(NeutralMode.Brake);
+		rightDrive[1].setNeutralMode(NeutralMode.Brake);
 	}
 
 	@Override
 	public void initDefaultCommand() {
-
+		//(new CompassSteering());
+		setDefaultCommand(new JoystickDrive_CarSteering());
 	}
 
 	public void tankDrive(double left, double right) {
